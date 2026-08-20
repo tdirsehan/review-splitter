@@ -3,35 +3,214 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#6d5dfc">
 <title>Reviewer Response Starter</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#dbe1ea;--accent:#3157d5;--accent2:#2445ae;--soft:#eef2ff;--comment:#f8fafc}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}.wrap{max-width:1080px;margin:auto;padding:30px 18px 56px}h1{margin:0 0 8px;font-size:30px}.sub,.mini{color:var(--muted)}.sub{margin:0 0 22px}.mini{font-size:13px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:19px;margin-bottom:17px;box-shadow:0 6px 24px rgba(23,32,51,.05)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:block;font-weight:700;margin-bottom:7px}textarea,input,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;color:var(--text);background:#fff}textarea:focus,input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(49,87,213,.10)}#comments{min-height:265px;resize:vertical}.options{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fafbff}.check{display:flex;align-items:center;gap:7px;font-weight:600;margin:0}.check input{width:auto}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--accent);color:#fff}.primary:hover{background:var(--accent2)}.secondary{background:var(--soft);color:#273b91}.ghost{background:#f3f4f6;color:#374151}.section-title{font-size:18px;font-weight:800;margin:18px 0 8px}.reviewer-title{font-size:17px;font-weight:800;margin:24px 0 4px}.result{border-top:1px solid var(--line);padding-top:15px;margin-top:15px}.rhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.rtitle{font-weight:800}.pill{font-size:11px;background:#eef2ff;color:#33449a;border-radius:999px;padding:3px 7px;margin-left:6px}.comment{background:var(--comment);border-left:4px solid #c7d2fe;padding:10px 12px;border-radius:8px;color:#334155;margin:8px 0 10px;white-space:pre-wrap}.starter,.editor-letter{min-height:105px;resize:vertical}.editor-letter{min-height:235px}.empty{text-align:center;color:var(--muted);padding:24px}.status{font-size:13px;color:#475569;margin-top:8px}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding:20px 12px}h1{font-size:25px}}
+:root{
+  --bg:#f7f7ff;
+  --bg2:#fff7fb;
+  --card:rgba(255,255,255,.9);
+  --text:#17162b;
+  --muted:#6f7287;
+  --line:#e4e4f2;
+  --purple:#6d5dfc;
+  --purple2:#8c52ff;
+  --indigo:#4f46e5;
+  --cyan:#14b8a6;
+  --cyan-soft:#e9fffb;
+  --pink:#ec4899;
+  --pink-soft:#fff0f7;
+  --amber:#f59e0b;
+  --amber-soft:#fff7df;
+  --comment:#f8f8ff;
+  --shadow:0 18px 50px rgba(79,70,229,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% 5%,rgba(109,93,252,.16),transparent 28%),
+    radial-gradient(circle at 90% 12%,rgba(236,72,153,.12),transparent 24%),
+    radial-gradient(circle at 80% 92%,rgba(20,184,166,.12),transparent 28%),
+    linear-gradient(135deg,var(--bg),var(--bg2));
+}
+body:before,body:after{content:"";position:fixed;border-radius:999px;filter:blur(8px);pointer-events:none;z-index:-1}
+body:before{width:260px;height:260px;background:rgba(109,93,252,.10);left:-90px;top:34%}
+body:after{width:320px;height:320px;background:rgba(236,72,153,.08);right:-120px;bottom:8%}
+.wrap{max-width:1120px;margin:auto;padding:34px 18px 64px}
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:28px 28px 26px;
+  margin-bottom:20px;
+  border-radius:26px;
+  color:#fff;
+  background:linear-gradient(125deg,#4f46e5 0%,#7c3aed 48%,#db2777 100%);
+  box-shadow:0 24px 60px rgba(79,70,229,.24);
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:999px;background:rgba(255,255,255,.11)}
+.hero:before{width:220px;height:220px;right:-70px;top:-105px}
+.hero:after{width:130px;height:130px;right:105px;bottom:-75px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);font-size:12px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+.hero h1{position:relative;margin:13px 0 7px;font-size:34px;line-height:1.08;letter-spacing:-.03em}
+.hero p{position:relative;max-width:790px;margin:0;color:rgba(255,255,255,.88);font-size:15px;line-height:1.65}
+.hero-dots{position:absolute;right:24px;bottom:21px;display:flex;gap:7px}.hero-dots i{display:block;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.55)}.hero-dots i:nth-child(2){background:#5eead4}.hero-dots i:nth-child(3){background:#f9a8d4}
+.card{
+  background:var(--card);
+  border:1px solid rgba(226,226,242,.88);
+  border-radius:22px;
+  padding:21px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:15px}
+.card-title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:850;letter-spacing:-.02em}
+.icon-badge{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#ede9fe,#ffe4f2);font-size:18px;box-shadow:inset 0 0 0 1px rgba(109,93,252,.10)}
+.sub,.mini{color:var(--muted)}
+.mini{font-size:13px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:block;font-weight:760;margin-bottom:7px;font-size:13px;color:#34364b}
+textarea,input,select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:12px 13px;
+  font:inherit;
+  color:var(--text);
+  background:rgba(255,255,255,.96);
+  transition:.2s ease;
+}
+textarea:hover,input:hover,select:hover{border-color:#cbc8ef}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 4px rgba(109,93,252,.11),0 8px 24px rgba(109,93,252,.08)}
+#comments{min-height:270px;resize:vertical;line-height:1.55}
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.check{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0;
+  padding:12px 13px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  cursor:pointer;
+  transition:.2s ease;
+  font-size:13px;
+  font-weight:800;
+}
+.check:hover{transform:translateY(-1px);border-color:#cfcaf7;box-shadow:0 8px 20px rgba(109,93,252,.08)}
+.check:nth-child(1){background:linear-gradient(135deg,#f4f0ff,#fff);border-color:#ddd6fe}
+.check:nth-child(2){background:linear-gradient(135deg,#effcf9,#fff);border-color:#c7f3e9}
+.check:nth-child(3){background:linear-gradient(135deg,#fff0f7,#fff);border-color:#fbcfe8}
+.check input{width:18px;height:18px;accent-color:var(--purple);margin:0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+button{
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  font:inherit;
+  font-weight:820;
+  cursor:pointer;
+  transition:.18s ease;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.primary{color:#fff;background:linear-gradient(135deg,var(--purple),var(--purple2));box-shadow:0 9px 22px rgba(109,93,252,.24)}
+.primary:hover{box-shadow:0 12px 28px rgba(109,93,252,.32)}
+.secondary{color:#075f56;background:linear-gradient(135deg,#dffcf6,#ecfffb);box-shadow:inset 0 0 0 1px #bdeee4}
+.ghost{color:#7f1d5a;background:linear-gradient(135deg,#fff0f7,#fff7fb);box-shadow:inset 0 0 0 1px #f9cfe4}
+.status{margin-top:11px;font-size:13px;font-weight:700;color:#4c5271;padding:0 2px}
+.output-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.section-title{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:17px;
+  font-weight:900;
+  margin:20px 0 9px;
+  padding:8px 12px;
+  color:#5b21b6;
+  background:#f3e8ff;
+  border-radius:999px;
+}
+.section-title:before{content:"✦";color:#8b5cf6}
+.reviewer-title{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:17px;
+  font-weight:900;
+  margin:26px 0 6px;
+  padding:11px 13px;
+  border-radius:14px;
+  color:#fff;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  box-shadow:0 10px 24px rgba(79,70,229,.18);
+}
+.reviewer-title:before{content:"R";display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:rgba(255,255,255,.18);font-size:12px}
+.result{
+  position:relative;
+  padding:16px 16px 14px;
+  margin-top:12px;
+  border:1px solid #e7e6f3;
+  border-radius:16px;
+  background:rgba(255,255,255,.74);
+}
+.result:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:16px 0 0 16px;background:linear-gradient(#6d5dfc,#ec4899)}
+.rhead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rtitle{font-weight:900;color:#27273f;letter-spacing:.01em}
+.pill{display:inline-flex;align-items:center;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.04em;background:#ede9fe;color:#5b21b6;border-radius:999px;padding:5px 8px;margin-left:7px}
+.comment{background:linear-gradient(135deg,#f8f9ff,#fff);border:1px solid #ececf7;border-left:4px solid #8b5cf6;padding:11px 12px;border-radius:11px;color:#454861;margin:10px 0 12px;white-space:pre-wrap;line-height:1.55}
+.starter,.editor-letter{min-height:108px;resize:vertical;line-height:1.55;background:#fff}
+.editor-letter{min-height:245px;border-color:#ddd6fe;background:linear-gradient(180deg,#fff,#fcfaff)}
+.empty{display:grid;place-items:center;min-height:140px;text-align:center;color:var(--muted);padding:24px;border:1px dashed #d9d8e9;border-radius:16px;background:rgba(250,250,255,.7)}
+.empty:before{content:"✦";display:block;font-size:28px;color:#a78bfa;margin-bottom:6px}
+.footer-note{text-align:center;color:#8a8da3;font-size:12px;margin-top:14px}
+@media(max-width:760px){.grid,.options{grid-template-columns:1fr}.wrap{padding:18px 11px 44px}.hero{padding:23px 19px}.hero h1{font-size:28px}.card{padding:16px;border-radius:18px}.output-toolbar{align-items:flex-start;flex-direction:column}.actions{margin-top:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>Reviewer Response Starter</h1>
-<p class="sub">Karar mektubunu veya hakem yorumlarını tek alana yapıştırın. Sistem Reviewer 1 / Reviewer 2 ayrımını ve bağımsız alt talepleri otomatik olarak point-by-point maddelere dönüştürür.</p>
-<div class="card">
-  <div class="grid">
-    <div><label for="tone">Yanıt tonu</label><select id="tone"><option value="balanced">Balanced / Academic</option><option value="warm">Warm / Appreciative</option><option value="concise">Concise / Direct</option></select></div>
-    <div><label for="authorName">Author name</label><input id="authorName" value="[Author Name]"></div>
+  <section class="hero">
+    <div class="hero-badge">✦ Academic Revision Assistant</div>
+    <h1>Reviewer Response Starter</h1>
+    <p>Karar mektubunu veya hakem yorumlarını tek alana yapıştırın. Sistem Reviewer 1 / Reviewer 2 ayrımını ve bağımsız alt talepleri otomatik olarak point-by-point maddelere dönüştürür.</p>
+    <div class="hero-dots"><i></i><i></i><i></i></div>
+  </section>
+
+  <div class="card">
+    <div class="card-head">
+      <div><div class="card-title"><span class="icon-badge">✍️</span> Girdi ve Ayarlar</div><div class="mini">Yanıt tonunu, yazar adını ve çıktı bileşenlerini seçin.</div></div>
+    </div>
+    <div class="grid">
+      <div><label for="tone">Yanıt tonu</label><select id="tone"><option value="balanced">Balanced / Academic</option><option value="warm">Warm / Appreciative</option><option value="concise">Concise / Direct</option></select></div>
+      <div><label for="authorName">Author name</label><input id="authorName" value="[Author Name]"></div>
+    </div>
+    <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Karar mektubunu veya Reviewer 1 / Reviewer 2 yorumlarını buraya yapıştırın..."></textarea></div>
+    <div class="options">
+      <label class="check"><input type="checkbox" id="includeEditor" checked> <span>✉️ Editor Letter</span></label>
+      <label class="check"><input type="checkbox" id="includeComments" checked> <span>💬 Reviewer Comments</span></label>
+      <label class="check"><input type="checkbox" id="includeResponses" checked> <span>📝 Responses</span></label>
+    </div>
+    <div class="mini" style="margin-top:10px">Reviewer 1, Reviewer 2, R1, R2, R1.1 ve R2.1 biçimleri algılanır. Aynı cümledeki bağımsız revision talepleri de R1.2, R1.3… / R2.2, R2.3… şeklinde ayrılır.</div>
+    <div class="actions"><button class="primary" onclick="generate()">✦ Responses Oluştur</button><button class="secondary" onclick="loadExample()">Örnek Yükle</button><button class="ghost" onclick="clearAll()">Temizle</button></div>
+    <div id="parseStatus" class="status"></div>
   </div>
-  <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Karar mektubunu veya Reviewer 1 / Reviewer 2 yorumlarını buraya yapıştırın..."></textarea></div>
-  <div class="options">
-    <label class="check"><input type="checkbox" id="includeEditor" checked> Editor Letter</label>
-    <label class="check"><input type="checkbox" id="includeComments" checked> Reviewer Comments</label>
-    <label class="check"><input type="checkbox" id="includeResponses" checked> Responses</label>
+
+  <div class="card">
+    <div class="output-toolbar">
+      <div><div class="card-title"><span class="icon-badge">✨</span> Çıktı</div><div class="mini">Editor Letter ve response metinleri burada düzenlenebilir.</div></div>
+      <div class="actions" style="margin:0"><button class="secondary" onclick="copyAll()">Tümünü Kopyala</button><button class="ghost" onclick="downloadTxt()">TXT İndir</button></div>
+    </div>
+    <div id="results" class="empty">Henüz bir çıktı oluşturulmadı.</div>
   </div>
-  <div class="mini" style="margin-top:8px">Reviewer 1, Reviewer 2, R1, R2, R1.1 ve R2.1 biçimleri algılanır. Aynı cümledeki bağımsız revision talepleri de R1.2, R1.3… / R2.2, R2.3… şeklinde ayrılır.</div>
-  <div class="actions"><button class="primary" onclick="generate()">Responses Oluştur</button><button class="secondary" onclick="loadExample()">Örnek Yükle</button><button class="ghost" onclick="clearAll()">Temizle</button></div>
-  <div id="parseStatus" class="status"></div>
-</div>
-<div class="card">
-  <div class="rhead"><div><div style="font-size:19px;font-weight:800">Çıktı</div><div class="mini">Editor Letter ve response metinleri düzenlenebilir.</div></div><div class="actions" style="margin:0"><button class="secondary" onclick="copyAll()">Tümünü Kopyala</button><button class="ghost" onclick="downloadTxt()">TXT İndir</button></div></div>
-  <div id="results" class="empty">Henüz bir çıktı oluşturulmadı.</div>
-</div>
+  <div class="footer-note">Designed for faster, cleaner point-by-point reviewer responses.</div>
 </div>
 <script>
 const T={
@@ -71,7 +250,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 function editorLetter(){const author=n(document.getElementById('authorName').value)||'[Author Name]';const d=new Date(),date=String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();return `${date}\n\nDear [Editor(s)],\n\nThank you for the opportunity to revise our manuscript. We sincerely appreciate the editor's and reviewers' constructive comments and suggestions, which have helped us improve the clarity, rigor, and overall contribution of the manuscript.\n\nBelow, we provide a point-by-point response to each reviewer comment. Each comment is reproduced first, followed by our corresponding response. The relevant revisions have been incorporated into the revised manuscript and highlighted for ease of reference.\n\nSincerely,\n${author}`}
 function generate(){
  const items=parse(document.getElementById('comments').value),tone=document.getElementById('tone').value,root=document.getElementById('results'),incEditor=document.getElementById('includeEditor').checked,incComments=document.getElementById('includeComments').checked,incResponses=document.getElementById('includeResponses').checked;window.currentItems=items;
- const reviewers=[...new Set(items.map(x=>x.reviewer))];document.getElementById('parseStatus').textContent=items.length?`Algılandı: ${reviewers.map(r=>'Reviewer '+r).join(', ')} • ${items.length} ayrı yorum`:'Hakem yorumu algılanamadı.';
+ const reviewers=[...new Set(items.map(x=>x.reviewer))];document.getElementById('parseStatus').textContent=items.length?`✓ Algılandı: ${reviewers.map(r=>'Reviewer '+r).join(', ')} • ${items.length} ayrı yorum`:'Hakem yorumu algılanamadı.';
  if(!items.length&&!incEditor){root.className='empty';root.textContent='Lütfen hakem yorumlarını veya karar mektubunu girin.';return}
  root.className='';root.innerHTML='';
  if(incEditor){const h=document.createElement('div');h.className='section-title';h.textContent='Editor Letter';root.appendChild(h);const ta=document.createElement('textarea');ta.id='editorLetter';ta.className='editor-letter';ta.value=editorLetter();root.appendChild(ta)}
@@ -83,4 +262,5 @@ function downloadTxt(){const a=document.createElement('a');a.href=URL.createObje
 function clearAll(){document.getElementById('comments').value='';document.getElementById('results').className='empty';document.getElementById('results').textContent='Henüz bir çıktı oluşturulmadı.';document.getElementById('parseStatus').textContent='';window.currentItems=[]}
 function loadExample(){document.getElementById('comments').value=`Dear Author(s),\n\nYour manuscript has now been evaluated by two independent reviewers. Both reviewers acknowledge the relevance of the topic and recognize the potential contribution of the study. Reviewer 1 highlights the need to clarify the theoretical contribution of the study and to explain more explicitly how the proposed framework extends the existing literature. The reviewer also recommends updating the literature review with more recent studies, strengthening the theoretical rationale underlying the hypotheses, and providing additional methodological details regarding the sampling procedure, data collection process, measurement scales, and analytical approach. Further clarification regarding validity and reliability assessments is also requested. Reviewer 2 raises additional concerns regarding the positioning and interpretation of the study. In particular, the reviewer recommends providing a clearer explanation of the research gap and the novelty of the study, strengthening the justification for the conceptual model, and discussing the findings more closely in relation to the theoretical framework. The reviewer also suggests improving the discussion of managerial implications, limitations, and directions for future research. After carefully considering both reports, I believe that the manuscript has potential, but substantial revisions are required before a final decision can be made.`;generate()}
 </script>
-</body></html>
+</body>
+</html>
