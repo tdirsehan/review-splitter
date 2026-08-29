@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#6d5dfc">
-<title>Reviewer Response Starter</title>
+<title>Review Splitter</title>
 <style>
 :root{
   --bg:#f7f7ff;
@@ -179,36 +179,36 @@ button:active{transform:translateY(0)}
 <div class="wrap">
   <section class="hero">
     <div class="hero-badge">✦ Academic Revision Assistant</div>
-    <h1>Reviewer Response Starter</h1>
-    <p>Karar mektubunu veya hakem yorumlarını tek alana yapıştırın. Sistem Reviewer 1 / Reviewer 2 ayrımını ve bağımsız alt talepleri otomatik olarak point-by-point maddelere dönüştürür.</p>
+    <h1>Review Splitter</h1>
+    <p>Paste the editorial decision letter or reviewer comments into a single field. The system automatically identifies Reviewer 1 / Reviewer 2 sections and converts independent revision requests into structured point-by-point items.</p>
     <div class="hero-dots"><i></i><i></i><i></i></div>
   </section>
 
   <div class="card">
     <div class="card-head">
-      <div><div class="card-title"><span class="icon-badge">✍️</span> Girdi ve Ayarlar</div><div class="mini">Yanıt tonunu, yazar adını ve çıktı bileşenlerini seçin.</div></div>
+      <div><div class="card-title"><span class="icon-badge">✍️</span> Input and Setting</div><div class="mini">Response tonenu, yazar adını ve çıktı bileşenlerini seçin.</div></div>
     </div>
     <div class="grid">
-      <div><label for="tone">Yanıt tonu</label><select id="tone"><option value="balanced">Balanced / Academic</option><option value="warm">Warm / Appreciative</option><option value="concise">Concise / Direct</option></select></div>
+      <div><label for="tone">Response tone</label><select id="tone"><option value="balanced">Balanced / Academic</option><option value="warm">Warm / Appreciative</option><option value="concise">Concise / Direct</option></select></div>
       <div><label for="authorName">Author name</label><input id="authorName" value="[Author Name]"></div>
     </div>
-    <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Karar mektubunu veya Reviewer 1 / Reviewer 2 yorumlarını buraya yapıştırın..."></textarea></div>
+    <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Paste the editorial decision letter or Reviewer 1 / Reviewer 2 comments here..".></textarea></div>
     <div class="options">
       <label class="check"><input type="checkbox" id="includeEditor" checked> <span>✉️ Editor Letter</span></label>
       <label class="check"><input type="checkbox" id="includeComments" checked> <span>💬 Reviewer Comments</span></label>
       <label class="check"><input type="checkbox" id="includeResponses" checked> <span>📝 Responses</span></label>
     </div>
-    <div class="mini" style="margin-top:10px">Reviewer 1, Reviewer 2, R1, R2, R1.1 ve R2.1 biçimleri algılanır. Aynı cümledeki bağımsız revision talepleri de R1.2, R1.3… / R2.2, R2.3… şeklinde ayrılır.</div>
-    <div class="actions"><button class="primary" onclick="generate()">✦ Responses Oluştur</button><button class="secondary" onclick="loadExample()">Örnek Yükle</button><button class="ghost" onclick="clearAll()">Temizle</button></div>
+    <div class="mini" style="margin-top:10px">The app detects formats such as Reviewer 1, Reviewer 2, R1, R2, R1.1 and R2.1. Independent revision requests appearing in the same sentence are also separated into items such as R1.2, R1.3, R2.2 and R2.3.</div>
+    <div class="actions"><button class="primary" onclick="generate()">✦ Generate Responses</button><button class="secondary" onclick="loadExample()">Load Sample</button><button class="ghost" onclick="clearAll()">Clear</button></div>
     <div id="parseStatus" class="status"></div>
   </div>
 
   <div class="card">
     <div class="output-toolbar">
-      <div><div class="card-title"><span class="icon-badge">✨</span> Çıktı</div><div class="mini">Editor Letter ve response metinleri burada düzenlenebilir.</div></div>
-      <div class="actions" style="margin:0"><button class="secondary" onclick="copyAll()">Tümünü Kopyala</button><button class="ghost" onclick="downloadTxt()">TXT İndir</button></div>
+      <div><div class="card-title"><span class="icon-badge">✨</span> Output</div><div class="mini">The editor letter and response texts can be edited here.</div></div>
+      <div class="actions" style="margin:0"><button class="secondary" onclick="copyAll()">Copy All</button><button class="ghost" onclick="downloadTxt()">Download TXT</button></div>
     </div>
-    <div id="results" class="empty">Henüz bir çıktı oluşturulmadı.</div>
+    <div id="results" class="empty">No output has been generated yet.</div>
   </div>
   <div class="footer-note">Designed for faster, cleaner point-by-point reviewer responses.</div>
 </div>
@@ -251,7 +251,7 @@ function editorLetter(){const author=n(document.getElementById('authorName').val
 function generate(){
  const items=parse(document.getElementById('comments').value),tone=document.getElementById('tone').value,root=document.getElementById('results'),incEditor=document.getElementById('includeEditor').checked,incComments=document.getElementById('includeComments').checked,incResponses=document.getElementById('includeResponses').checked;window.currentItems=items;
  const reviewers=[...new Set(items.map(x=>x.reviewer))];document.getElementById('parseStatus').textContent=items.length?`✓ Algılandı: ${reviewers.map(r=>'Reviewer '+r).join(', ')} • ${items.length} ayrı yorum`:'Hakem yorumu algılanamadı.';
- if(!items.length&&!incEditor){root.className='empty';root.textContent='Lütfen hakem yorumlarını veya karar mektubunu girin.';return}
+ if(!items.length&&!incEditor){root.className='empty';root.textContent='Lütfen hakem yorumlarını veya Paste the editorial decision letter or Reviewer 1 / Reviewer 2 comments here...u girin.';return}
  root.className='';root.innerHTML='';
  if(incEditor){const h=document.createElement('div');h.className='section-title';h.textContent='Editor Letter';root.appendChild(h);const ta=document.createElement('textarea');ta.id='editorLetter';ta.className='editor-letter';ta.value=editorLetter();root.appendChild(ta)}
  let lastReviewer=null;items.forEach((it,i)=>{if(it.reviewer!==lastReviewer){const h=document.createElement('div');h.className='reviewer-title';h.textContent='Reviewer '+it.reviewer;root.appendChild(h);lastReviewer=it.reviewer}const c=cls(it.text),d=document.createElement('div');d.className='result';let html=`<div class="rhead"><div class="rtitle">${esc(it.id)} <span class="pill">${esc(c)}</span></div></div>`;if(incComments)html+=`<div class="comment">${esc(it.text)}</div>`;if(incResponses){const st=T[tone][c]||T[tone].general;html+=`<label>Response ${esc(it.id.slice(1))}</label><textarea class="starter" id="s${i}">${esc(st)}</textarea>`}d.innerHTML=html;root.appendChild(d)})
