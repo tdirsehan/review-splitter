@@ -192,7 +192,7 @@ button:active{transform:translateY(0)}
       <div><label for="tone">Response tone</label><select id="tone"><option value="balanced">Balanced / Academic</option><option value="warm">Warm / Appreciative</option><option value="concise">Concise / Direct</option></select></div>
       <div><label for="authorName">Author name</label><input id="authorName" value="[Author Name]"></div>
     </div>
-    <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Paste the editorial decision letter or Reviewer 1 / Reviewer 2 comments here.."</textarea></div>
+    <div style="margin-top:14px"><label for="comments">Reviewer Comments / Decision Letter</label><textarea id="comments" placeholder="Paste the editorial decision letter or Reviewer 1 / Reviewer 2 comments here.."></textarea></div>
     <div class="options">
       <label class="check"><input type="checkbox" id="includeEditor" checked> <span>✉️ Editor Letter</span></label>
       <label class="check"><input type="checkbox" id="includeComments" checked> <span>💬 Reviewer Comments</span></label>
@@ -250,7 +250,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 function editorLetter(){const author=n(document.getElementById('authorName').value)||'[Author Name]';const d=new Date(),date=String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();return `${date}\n\nDear [Editor(s)],\n\nThank you for the opportunity to revise our manuscript. We sincerely appreciate the editor's and reviewers' constructive comments and suggestions, which have helped us improve the clarity, rigor, and overall contribution of the manuscript.\n\nBelow, we provide a point-by-point response to each reviewer comment. Each comment is reproduced first, followed by our corresponding response. The relevant revisions have been incorporated into the revised manuscript and highlighted for ease of reference.\n\nSincerely,\n${author}`}
 function generate(){
  const items=parse(document.getElementById('comments').value),tone=document.getElementById('tone').value,root=document.getElementById('results'),incEditor=document.getElementById('includeEditor').checked,incComments=document.getElementById('includeComments').checked,incResponses=document.getElementById('includeResponses').checked;window.currentItems=items;
- const reviewers=[...new Set(items.map(x=>x.reviewer))];document.getElementById('parseStatus').textContent=items.length?`✓ Detected: ${reviewers.map(r=>'Reviewer '+r).join(', ')} • ${items.length} separate comments:'No reviewer comments were detected.;
+ const reviewers=[...new Set(items.map(x=>x.reviewer))];document.getElementById('parseStatus').textContent=items.length?`✓ Detected: ${reviewers.map(r=>'Reviewer '+r).join(', ')} • ${items.length} separate comments`:'No reviewer comments were detected.';
  if(!items.length&&!incEditor){root.className='empty';root.textContent='Please enter reviewer comments or an editorial decision letter.';return}
  root.className='';root.innerHTML='';
  if(incEditor){const h=document.createElement('div');h.className='section-title';h.textContent='Editor Letter';root.appendChild(h);const ta=document.createElement('textarea');ta.id='editorLetter';ta.className='editor-letter';ta.value=editorLetter();root.appendChild(ta)}
